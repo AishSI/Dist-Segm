@@ -11,30 +11,30 @@ namespace DistanceTask
         }
 
         // Скалярное произведение векторов;
-        public static double scalarVector(double P0x, double P0y, double P1x, double P1y, double Px, double Py)
+        public static double GetScalarVector(double p0x, double p0y, double p1x, double p1y, double px, double py)
         {            
-            return ((Px - P0x) * (P1x - P0x) + (Py - P0y) * (P1y - P0y));
+            return (px - p0x) * (p1x - p0x) + (py - p0y) * (p1y - p0y);
         }
 
         // Расстояние от точки (x, y) до отрезка AB с координатами A(ax, ay), B(bx, by)
         public static double GetDistanceToSegment(double ax, double ay, double bx, double by, double x, double y)
 		{
-            double AB = GetDistanceToSide(ax, ay, bx, by);
-            double AC = GetDistanceToSide(ax, ay, x, y);
-            double CB = GetDistanceToSide(x, y, bx, by);
+            double ab = GetDistanceToSide(ax, ay, bx, by);
+            double ac = GetDistanceToSide(ax, ay, x, y);
+            double cb = GetDistanceToSide(x, y, bx, by);
 
             //Получаем скалярные произведения векторов
-            double scalarACAB = scalarVector(ax,ay,bx,by,x,y);
-            double scalarBCBA = scalarVector(bx, by,ax,ay,x,y);
+            double scalarACAB = GetScalarVector(ax,ay,bx,by,x,y);
+            double scalarBCBA = GetScalarVector(bx, by,ax,ay,x,y);
 
-            if (AB == 0) return AC;
+            if (ab == 0) return ac;
             else if (scalarACAB >= 0 && scalarBCBA >= 0)
             {
-                double p = (AC + CB + AB) / 2.0;
-                double s = Math.Sqrt(Math.Abs((p * (p - AC) * (p - CB) * (p - AB))));
-                return (2.0 * s) / AB;
+                double p = (ac + cb + ab) / 2.0;
+                double s = Math.Sqrt(Math.Abs((p * (p - ac) * (p - cb) * (p - ab))));
+                return (2.0 * s) / ab;
             }
-            else if (scalarACAB < 0 || scalarBCBA < 0) return Math.Min(AC, CB);
+            else if (scalarACAB < 0 || scalarBCBA < 0) return Math.Min(ac, cb);
             else return 0;
         }
 	}
